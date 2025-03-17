@@ -177,10 +177,34 @@ export class ApiService {
     }
   }
 
-  static async getProducts(page: number, pageSize: number, sortBy: string = 'id', sortDesc: boolean = true) {
+  static async getProducts(page: number, pageSize: number, sortBy: string = 'id', sortDesc: boolean = true, filters: any = null) {
     try {
       const skip = pageSize * (page - 1);
-      const response = await fetch(getFullUrl(`/Dictionaries/Products?Take=${pageSize}&Skip=${skip}&SortBy=${sortBy}&SortByDescendingOrder=${sortDesc}`));
+      let url = getFullUrl(`/Dictionaries/Products?Take=${pageSize}&Skip=${skip}&SortBy=${sortBy}&SortByDescendingOrder=${sortDesc}`);
+      
+      // Add filter parameters if provided
+      if (filters) {
+        // Handle CategoryIds (array)
+        if (filters.CategoryIds && filters.CategoryIds.length > 0) {
+          url += `&CategoryIds=${filters.CategoryIds.join(',')}`;
+        }
+        
+        // Handle CountryIds (array)
+        if (filters.CountryIds && filters.CountryIds.length > 0) {
+          url += `&CountryIds=${filters.CountryIds.join(',')}`;
+        }
+        
+        // Handle simple string/number parameters
+        if (filters.Code) url += `&Code=${encodeURIComponent(filters.Code)}`;
+        if (filters.Name) url += `&Name=${encodeURIComponent(filters.Name)}`;
+        if (filters.PriceStart) url += `&PriceStart=${filters.PriceStart}`;
+        if (filters.PriceEnd) url += `&PriceEnd=${filters.PriceEnd}`;
+        if (filters.DateStart) url += `&DateStart=${filters.DateStart}`;
+        if (filters.DateEnd) url += `&DateEnd=${filters.DateEnd}`;
+      }
+      
+      console.log('API Request URL:', url);
+      const response = await fetch(url);
       const data = await response.json();
       
       if (!response.ok) {
@@ -201,10 +225,31 @@ export class ApiService {
     }
   }
 
-  static async getProductsByCategory(categoryId: number, page: number, pageSize: number, sortBy: string = 'id', sortDesc: boolean = true) {
+  static async getProductsByCategory(categoryId: number, page: number, pageSize: number, sortBy: string = 'id', sortDesc: boolean = true, filters: any = null) {
     try {
       const skip = pageSize * (page - 1);
-      const response = await fetch(getFullUrl(`/Dictionaries/Products?CategoryIds=${categoryId}&Take=${pageSize}&Skip=${skip}&SortBy=${sortBy}&SortByDescendingOrder=${sortDesc}`));
+      let url = getFullUrl(`/Dictionaries/Products?CategoryIds=${categoryId}&Take=${pageSize}&Skip=${skip}&SortBy=${sortBy}&SortByDescendingOrder=${sortDesc}`);
+      
+      // Add filter parameters if provided
+      if (filters) {
+        // Skip CategoryIds since we're already filtering by category
+        
+        // Handle CountryIds (array)
+        if (filters.CountryIds && filters.CountryIds.length > 0) {
+          url += `&CountryIds=${filters.CountryIds.join(',')}`;
+        }
+        
+        // Handle simple string/number parameters
+        if (filters.Code) url += `&Code=${encodeURIComponent(filters.Code)}`;
+        if (filters.Name) url += `&Name=${encodeURIComponent(filters.Name)}`;
+        if (filters.PriceStart) url += `&PriceStart=${filters.PriceStart}`;
+        if (filters.PriceEnd) url += `&PriceEnd=${filters.PriceEnd}`;
+        if (filters.DateStart) url += `&DateStart=${filters.DateStart}`;
+        if (filters.DateEnd) url += `&DateEnd=${filters.DateEnd}`;
+      }
+      
+      console.log('API Request URL:', url);
+      const response = await fetch(url);
       const data = await response.json();
       
       if (!response.ok) {

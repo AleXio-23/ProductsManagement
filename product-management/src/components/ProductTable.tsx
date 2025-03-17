@@ -491,6 +491,19 @@ interface SortConfig {
   direction: 'asc' | 'desc';
 }
 
+// Add a new interface for filter API parameters
+interface ProductFilterParams {
+  CategoryIds?: number[];
+  Code?: string;
+  Name?: string;
+  PriceStart?: number;
+  PriceEnd?: number;
+  CountryIds?: number[];
+  DateStart?: string;
+  DateEnd?: string;
+}
+
+// Add a new prop for filter changes
 interface ProductTableProps {
   products: Product[];
   currentPage: number;
@@ -501,6 +514,7 @@ interface ProductTableProps {
   onDeleteProducts?: (ids: number[]) => void;
   onAddProduct?: (product: ProductFormData) => void;
   onEditProduct?: (id: number, product: ProductFormData) => void;
+  onFilterChange?: (filters: ProductFilterParams) => void; // Add this new prop
   activeCategory?: number | null;
   onSort?: (sortBy: string, sortDesc: boolean) => void;
   currentSort?: SortConfig;
@@ -1212,6 +1226,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
   onDeleteProducts,
   onAddProduct,
   onEditProduct,
+  onFilterChange,
   activeCategory,
   onSort,
   currentSort = { key: 'id', direction: 'desc' }
@@ -1366,14 +1381,60 @@ const ProductTable: React.FC<ProductTableProps> = ({
     });
     setCountrySearchTerm('');
     setCategorySearchTerm('');
+    
+    // Call the parent component's filter handler with empty filters
+    if (onFilterChange) {
+      onFilterChange({});
+    }
   };
   
   const applyFilters = () => {
-    // TODO: Implement filter logic with API and parent component
-    console.log('Applying filters:', filters);
+    console.log('applyFilters function called');
+    // Convert our UI filter state to API parameters
+    const filterParams: ProductFilterParams = {};
     
-    // Here you would typically call the parent's filter function
-    // For example: onFilterChange(convertFiltersToApiParams());
+    // Only add non-empty filters
+    if (filters.selectedCategories.size > 0) {
+      filterParams.CategoryIds = Array.from(filters.selectedCategories);
+    }
+    
+    if (filters.code) {
+      filterParams.Code = filters.code;
+    }
+    
+    if (filters.name) {
+      filterParams.Name = filters.name;
+    }
+    
+    if (filters.minPrice) {
+      filterParams.PriceStart = parseFloat(filters.minPrice);
+    }
+    
+    if (filters.maxPrice) {
+      filterParams.PriceEnd = parseFloat(filters.maxPrice);
+    }
+    
+    if (filters.selectedCountries.size > 0) {
+      filterParams.CountryIds = Array.from(filters.selectedCountries);
+    }
+    
+    if (filters.startDate) {
+      filterParams.DateStart = filters.startDate;
+    }
+    
+    if (filters.endDate) {
+      filterParams.DateEnd = filters.endDate;
+    }
+    
+    console.log('Applying filters:', filterParams);
+    
+    // Call the parent component's filter handler
+    if (onFilterChange) {
+      console.log('Calling onFilterChange with params');
+      onFilterChange(filterParams);
+    } else {
+      console.log('Warning: onFilterChange is not available');
+    }
   };
   
   // Build a flat list of all categories for the selector
@@ -2078,7 +2139,15 @@ const ProductTable: React.FC<ProductTableProps> = ({
             </FiltersTitle>
             <FiltersActions>
               <FilterButton onClick={clearFilters}>გასუფთავება</FilterButton>
-              <FilterButton variant="primary" onClick={applyFilters}>გამოყენება</FilterButton>
+              <FilterButton 
+                variant="primary" 
+                onClick={() => {
+                  console.log('Filter button clicked');
+                  applyFilters();
+                }}
+              >
+                გამოყენება
+              </FilterButton>
             </FiltersActions>
           </FiltersHeader>
           

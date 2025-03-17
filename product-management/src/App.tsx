@@ -239,6 +239,53 @@ const App: React.FC = () => {
     }
   };
 
+  // Add handler for filters
+  const handleFilterChange = async (filters: any) => {
+    console.log('Filter change received in App:', filters);
+    // Reset to first page when filters change
+    setCurrentPage(1);
+    
+    try {
+      setLoading(true);
+      let response;
+      
+      if (activeCategory) {
+        // If in a category, fetch filtered products for that category
+        response = await ApiService.getProductsByCategory(
+          activeCategory, 
+          1, // Start at page 1 with new filters
+          pageSize, 
+          sortConfig.key, 
+          sortConfig.direction === 'desc',
+          filters // Pass the filter parameters
+        );
+      } else {
+        // Otherwise fetch all filtered products
+        response = await ApiService.getProducts(
+          1, // Start at page 1 with new filters
+          pageSize, 
+          sortConfig.key, 
+          sortConfig.direction === 'desc',
+          filters // Pass the filter parameters
+        );
+      }
+      
+      setProducts(response.items);
+      setTotalItems(response.totalCount);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching filtered products:', error);
+      setLoading(false);
+      
+      // Show error message
+      showToast(
+        error instanceof Error ? error.message : 'პროდუქტების ფილტრაცია ვერ მოხერხდა',
+        'error',
+        'შეცდომა'
+      );
+    }
+  };
+
   return (
     <AppContainer>
       <MenuBar 
@@ -274,6 +321,7 @@ const App: React.FC = () => {
             activeCategory={activeCategory}
             onSort={handleSort}
             currentSort={sortConfig}
+            onFilterChange={handleFilterChange}
           />
         )}
         
