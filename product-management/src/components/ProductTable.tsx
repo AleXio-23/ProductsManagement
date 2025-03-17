@@ -910,6 +910,298 @@ const formatDateForInput = (dateString?: string): string => {
   return `${day}/${month}/${year}`;
 };
 
+// Add styled components for filters
+const FiltersContainer = styled.div`
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+`;
+
+const FiltersHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const FiltersTitle = styled.h3`
+  margin: 0;
+  font-size: 1rem;
+  color: #495057;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`;
+
+const FiltersActions = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+const FilterButton = styled.button<{ variant?: 'primary' | 'outline' }>`
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 32px;
+  transition: all 0.2s;
+  background-color: ${props => props.variant === 'primary' ? '#0d6efd' : 'white'};
+  color: ${props => props.variant === 'primary' ? 'white' : '#0d6efd'};
+  border: 1px solid ${props => props.variant === 'primary' ? '#0d6efd' : '#dee2e6'};
+  
+  &:hover {
+    background-color: ${props => props.variant === 'primary' ? '#0b5ed7' : '#f8f9fa'};
+    border-color: ${props => props.variant === 'primary' ? '#0b5ed7' : '#c1c9d0'};
+  }
+`;
+
+const FiltersRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+const FilterGroup = styled.div`
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`;
+
+const FilterLabel = styled.label`
+  display: block;
+  margin-bottom: 0;
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-weight: 500;
+`;
+
+const FilterInput = styled.input`
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  height: 38px;
+  
+  &:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  }
+`;
+
+const FilterDateInput = styled.input.attrs({ type: 'date' })`
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  height: 38px;
+  
+  &:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  }
+`;
+
+const PriceRangeContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  
+  span {
+    color: #6c757d;
+    flex-shrink: 0;
+  }
+  
+  ${FilterInput} {
+    flex: 1;
+  }
+`;
+
+const SelectedFiltersContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+`;
+
+const SelectedFilter = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #e9f2ff;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  color: #0d6efd;
+`;
+
+const RemoveFilterButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6c757d;
+  font-size: 0.9rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  
+  &:hover {
+    color: #dc3545;
+  }
+`;
+
+// Add to the component imports
+const MultiSelectContainer = styled.div`
+  position: relative;
+`;
+
+const MultiSelectHeader = styled.div`
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background-color: white;
+  cursor: pointer;
+  min-height: 38px;
+  height: 38px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 5px;
+  box-sizing: border-box;
+  overflow: hidden;
+  
+  &:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  }
+  
+  > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
+
+const MultiSelectOptions = styled.div`
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const MultiSelectOption = styled.div<{ selected: boolean }>`
+  padding: 8px 10px;
+  cursor: pointer;
+  background-color: ${props => props.selected ? '#e9f2ff' : 'white'};
+  
+  &:hover {
+    background-color: ${props => props.selected ? '#d0e3ff' : '#f8f9fa'};
+  }
+`;
+
+const MultiSelectTag = styled.span`
+  background-color: #e9f2ff;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  color: #0d6efd;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+const CategoryPath = styled.span`
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin-left: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const FilterToggle = styled.button`
+  padding: 8px 16px;
+  background-color: #0dcaf0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  
+  &:hover {
+    background-color: #0bacca;
+  }
+`;
+
+// Update the date range container to match the price range container
+const DateRangeContainer = styled(PriceRangeContainer)`
+  ${FilterDateInput} {
+    flex: 1;
+  }
+`;
+
+// Add styled components for the search inputs within dropdowns
+const DropdownSearchContainer = styled.div`
+  padding: 8px;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  border-bottom: 1px solid #dee2e6;
+  z-index: 1;
+`;
+
+const DropdownSearch = styled.input`
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  box-sizing: border-box;
+  
+  &:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  }
+`;
+
 const ProductTable: React.FC<ProductTableProps> = ({
   products,
   currentPage,
@@ -961,6 +1253,27 @@ const ProductTable: React.FC<ProductTableProps> = ({
     idsToDelete: [],
   });
 
+  // Add search state for country and category selectors
+  const [countrySearchTerm, setCountrySearchTerm] = useState('');
+  const [categorySearchTerm, setCategorySearchTerm] = useState('');
+
+  // Filter state
+  const [isFiltersVisible, setIsFiltersVisible] = useState(false);
+  const [filters, setFilters] = useState({
+    code: '',
+    name: '',
+    minPrice: '',
+    maxPrice: '',
+    selectedCountries: new Set<number>(),
+    startDate: '',
+    endDate: '',
+    selectedCategories: new Set<number>()
+  });
+  
+  // Multi-select state
+  const [isCountrySelectOpen, setIsCountrySelectOpen] = useState(false);
+  const [isCategorySelectOpen, setIsCategorySelectOpen] = useState(false);
+  
   // Get the toast functions
   const { showToast } = useToast();
 
@@ -983,6 +1296,130 @@ const ProductTable: React.FC<ProductTableProps> = ({
     { value: 11, label: 'ნოემბერი' },
     { value: 12, label: 'დეკემბერი' }
   ];
+  
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFilters(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+  
+  const toggleCountrySelect = () => {
+    setIsCountrySelectOpen(prev => !prev);
+    if (isCountrySelectOpen) {
+      setIsCategorySelectOpen(false);
+    } else {
+      setCountrySearchTerm(''); // Clear search when opening
+    }
+  };
+  
+  const toggleCategorySelect = () => {
+    setIsCategorySelectOpen(prev => !prev);
+    if (isCategorySelectOpen) {
+      setIsCountrySelectOpen(false);
+    } else {
+      setCategorySearchTerm(''); // Clear search when opening
+    }
+  };
+  
+  const toggleCountrySelection = (countryId: number) => {
+    setFilters(prev => {
+      const newSelected = new Set(prev.selectedCountries);
+      if (newSelected.has(countryId)) {
+        newSelected.delete(countryId);
+      } else {
+        newSelected.add(countryId);
+      }
+      return {
+        ...prev,
+        selectedCountries: newSelected
+      };
+    });
+  };
+  
+  const toggleCategorySelection = (categoryId: number) => {
+    setFilters(prev => {
+      const newSelected = new Set(prev.selectedCategories);
+      if (newSelected.has(categoryId)) {
+        newSelected.delete(categoryId);
+      } else {
+        newSelected.add(categoryId);
+      }
+      return {
+        ...prev,
+        selectedCategories: newSelected
+      };
+    });
+  };
+  
+  const clearFilters = () => {
+    setFilters({
+      code: '',
+      name: '',
+      minPrice: '',
+      maxPrice: '',
+      selectedCountries: new Set<number>(),
+      startDate: '',
+      endDate: '',
+      selectedCategories: new Set<number>()
+    });
+    setCountrySearchTerm('');
+    setCategorySearchTerm('');
+  };
+  
+  const applyFilters = () => {
+    // TODO: Implement filter logic with API and parent component
+    console.log('Applying filters:', filters);
+    
+    // Here you would typically call the parent's filter function
+    // For example: onFilterChange(convertFiltersToApiParams());
+  };
+  
+  // Build a flat list of all categories for the selector
+  const flattenCategories = (categories: Category[]): { id: number, name: string, path: string }[] => {
+    const result: { id: number, name: string, path: string }[] = [];
+    
+    const traverse = (cats: Category[], parentPath = '') => {
+      cats.forEach(cat => {
+        const path = parentPath ? `${parentPath} > ${cat.name}` : cat.name;
+        result.push({ id: cat.id, name: cat.name, path });
+        
+        if (cat.children && cat.children.length > 0) {
+          traverse(cat.children, path);
+        }
+      });
+    };
+    
+    traverse(categories);
+    return result;
+  };
+  
+  const flatCategories = flattenCategories(categories);
+  
+  // Filter countries based on search term
+  const filteredCountries = countries.filter(country => 
+    country.name.toLowerCase().includes(countrySearchTerm.toLowerCase())
+  );
+
+  // Filter categories based on search term
+  const filteredCategories = flatCategories.filter(category => 
+    category.name.toLowerCase().includes(categorySearchTerm.toLowerCase()) || 
+    category.path.toLowerCase().includes(categorySearchTerm.toLowerCase())
+  );
+  
+  const getSelectedCountriesNames = () => {
+    return Array.from(filters.selectedCountries).map(id => 
+      countries.find(c => c.id === id)?.name || ''
+    ).filter(name => name);
+  };
+  
+  const getSelectedCategoriesNames = () => {
+    return Array.from(filters.selectedCategories).map(id => {
+      const cat = flatCategories.find(c => c.id === id);
+      return cat ? cat.name : '';
+    }).filter(name => name);
+  };
 
   useEffect(() => {
     fetchCategories();
@@ -1627,8 +2064,192 @@ const ProductTable: React.FC<ProductTableProps> = ({
           <DiagramButton onClick={handleOpenDiagram}>
             დიაგრამა
           </DiagramButton>
+          <FilterToggle onClick={() => setIsFiltersVisible(!isFiltersVisible)}>
+            {isFiltersVisible ? '⬆️ ფილტრი' : '⬇️ ფილტრი'}
+          </FilterToggle>
         </TableActions>
       </TableHeader>
+
+      {isFiltersVisible && (
+        <FiltersContainer>
+          <FiltersHeader>
+            <FiltersTitle>
+              <span>🔍</span> ფილტრები
+            </FiltersTitle>
+            <FiltersActions>
+              <FilterButton onClick={clearFilters}>გასუფთავება</FilterButton>
+              <FilterButton variant="primary" onClick={applyFilters}>გამოყენება</FilterButton>
+            </FiltersActions>
+          </FiltersHeader>
+          
+          <FiltersRow>
+            <FilterGroup>
+              <FilterLabel>კოდი</FilterLabel>
+              <FilterInput 
+                type="text"
+                name="code"
+                value={filters.code}
+                onChange={handleFilterChange}
+                placeholder="ფილტრი კოდით"
+              />
+            </FilterGroup>
+            
+            <FilterGroup>
+              <FilterLabel>დასახელება</FilterLabel>
+              <FilterInput 
+                type="text"
+                name="name"
+                value={filters.name}
+                onChange={handleFilterChange}
+                placeholder="ფილტრი დასახელებით"
+              />
+            </FilterGroup>
+            
+            <FilterGroup>
+              <FilterLabel>ფასი</FilterLabel>
+              <PriceRangeContainer>
+                <FilterInput 
+                  type="number"
+                  name="minPrice"
+                  value={filters.minPrice}
+                  onChange={handleFilterChange}
+                  placeholder="მინ"
+                  min="0"
+                />
+                <span>-</span>
+                <FilterInput 
+                  type="number"
+                  name="maxPrice"
+                  value={filters.maxPrice}
+                  onChange={handleFilterChange}
+                  placeholder="მაქს"
+                  min="0"
+                />
+              </PriceRangeContainer>
+            </FilterGroup>
+          </FiltersRow>
+          
+          <FiltersRow>
+            <FilterGroup>
+              <FilterLabel>ქვეყანა</FilterLabel>
+              <MultiSelectContainer>
+                <MultiSelectHeader onClick={toggleCountrySelect}>
+                  {filters.selectedCountries.size === 0 ? (
+                    <span style={{ color: '#6c757d' }}>აირჩიეთ ქვეყანა</span>
+                  ) : (
+                    getSelectedCountriesNames().map(name => (
+                      <MultiSelectTag key={name}>
+                        {name}
+                        <RemoveFilterButton 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const countryId = countries.find(c => c.name === name)?.id;
+                            if (countryId) toggleCountrySelection(countryId);
+                          }}
+                        >
+                          ×
+                        </RemoveFilterButton>
+                      </MultiSelectTag>
+                    ))
+                  )}
+                </MultiSelectHeader>
+                
+                {isCountrySelectOpen && (
+                  <MultiSelectOptions>
+                    <DropdownSearchContainer>
+                      <DropdownSearch
+                        type="text"
+                        placeholder="ძებნა..."
+                        value={countrySearchTerm}
+                        onChange={(e) => setCountrySearchTerm(e.target.value)}
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    </DropdownSearchContainer>
+                    {filteredCountries.map(country => (
+                      <MultiSelectOption 
+                        key={country.id}
+                        selected={filters.selectedCountries.has(country.id)}
+                        onClick={() => toggleCountrySelection(country.id)}
+                      >
+                        {country.name}
+                      </MultiSelectOption>
+                    ))}
+                  </MultiSelectOptions>
+                )}
+              </MultiSelectContainer>
+            </FilterGroup>
+            
+            <FilterGroup>
+              <FilterLabel>თარიღის დიაპაზონი</FilterLabel>
+              <DateRangeContainer>
+                <FilterDateInput 
+                  name="startDate"
+                  value={filters.startDate}
+                  onChange={handleFilterChange}
+                  placeholder="დაწყების თარიღი"
+                />
+                <span>-</span>
+                <FilterDateInput 
+                  name="endDate"
+                  value={filters.endDate}
+                  onChange={handleFilterChange}
+                  placeholder="დასრულების თარიღი"
+                />
+              </DateRangeContainer>
+            </FilterGroup>
+            
+            <FilterGroup>
+              <FilterLabel>კატეგორია</FilterLabel>
+              <MultiSelectContainer>
+                <MultiSelectHeader onClick={toggleCategorySelect}>
+                  {filters.selectedCategories.size === 0 ? (
+                    <span style={{ color: '#6c757d' }}>აირჩიეთ კატეგორია</span>
+                  ) : (
+                    getSelectedCategoriesNames().map(name => (
+                      <MultiSelectTag key={name}>
+                        {name}
+                        <RemoveFilterButton 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const catId = flatCategories.find(c => c.name === name)?.id;
+                            if (catId) toggleCategorySelection(catId);
+                          }}
+                        >
+                          ×
+                        </RemoveFilterButton>
+                      </MultiSelectTag>
+                    ))
+                  )}
+                </MultiSelectHeader>
+                
+                {isCategorySelectOpen && (
+                  <MultiSelectOptions>
+                    <DropdownSearchContainer>
+                      <DropdownSearch
+                        type="text"
+                        placeholder="ძებნა..."
+                        value={categorySearchTerm}
+                        onChange={(e) => setCategorySearchTerm(e.target.value)}
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    </DropdownSearchContainer>
+                    {filteredCategories.map(category => (
+                      <MultiSelectOption 
+                        key={category.id}
+                        selected={filters.selectedCategories.has(category.id)}
+                        onClick={() => toggleCategorySelection(category.id)}
+                      >
+                        {category.name}
+                        <CategoryPath>{category.path.replace(category.name, '')}</CategoryPath>
+                      </MultiSelectOption>
+                    ))}
+                  </MultiSelectOptions>
+                )}
+              </MultiSelectContainer>
+            </FilterGroup>
+          </FiltersRow>
+        </FiltersContainer>
+      )}
 
       {isAddPopupOpen && (
         <PopupOverlay onClick={() => setIsAddPopupOpen(false)}>
