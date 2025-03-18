@@ -2125,9 +2125,10 @@ const ProductTable: React.FC<ProductTableProps> = ({
           <DiagramButton onClick={handleOpenDiagram}>
             დიაგრამა
           </DiagramButton>
-          <FilterToggle onClick={() => setIsFiltersVisible(!isFiltersVisible)}>
+          {/* <FilterToggle onClick={() => setIsFiltersVisible(!isFiltersVisible)}>
             {isFiltersVisible ? '⬆️ ფილტრი' : '⬇️ ფილტრი'}
-          </FilterToggle>
+          </FilterToggle> */}
+       
         </TableActions>
       </TableHeader>
 

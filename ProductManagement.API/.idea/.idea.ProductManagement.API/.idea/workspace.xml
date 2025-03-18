@@ -12,9 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c32906a-5338-4354-b49a-3f8cfafe9373" name="Changes" comment="fx">
-      <change afterPath="$PROJECT_DIR$/ProductManagement.Application/Services/Products/GetProducts/HelperMethods/QueryFilter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProductManagement.Application/Services/Products/GetProducts/GetProductsService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ProductManagement.Application/Services/Products/GetProducts/GetProductsService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProductManagement.Application/Services/Products/GetProducts/Models/ProductsFilterModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ProductManagement.Application/Services/Products/GetProducts/Models/ProductsFilterModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProductManagement.API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProductManagement.API/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,18 +25,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "AleXio-23"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AleXio-23&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/AleXio-23/ProductsManagement.git",
-    "accountId": "361ecbdf-8ae1-4de0-9c82-efd43d33d91c"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AleXio-23/ProductsManagement.git&quot;,
+    &quot;accountId&quot;: &quot;361ecbdf-8ae1-4de0-9c82-efd43d33d91c&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/2e/d959afa0/Converter`2.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -54,26 +52,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.ProductManagement.API: IIS Express.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.ProductManagement.API: IIS Express.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\Aleksandre\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Aleksandre\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\Aleksandre\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Aleksandre\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Aleksandre\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Aleksandre\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ProductManagement.API: IIS Express">
     <configuration name="ProductManagement.API: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ProductManagement.API/ProductManagement.API.csproj" />
@@ -152,24 +150,5 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="fx" />
     <option name="LAST_COMMIT_MESSAGE" value="fx" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ProductManagement.Application/Services/Categories/DeleteCategories/DeleteCategoriesService.cs</url>
-          <line>9</line>
-          <properties documentPath="C:\Users\Aleksandre\Desktop\FINA\ProductManagement.API\ProductManagement.Application\Services\Categories\DeleteCategories\DeleteCategoriesService.cs" containingFunctionPresentation="Method 'Execute'">
-            <startOffsets>
-              <option value="377" />
-            </startOffsets>
-            <endOffsets>
-              <option value="404" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
